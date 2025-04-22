@@ -20,7 +20,7 @@ const features = [
   {
     icon: <Award className="h-10 w-10 text-accent" />,
     title: "50+ Years Combined Experience",
-    description: "With over five decades of combined experience, we've successfully helped thousands of clients secure their disability benefits.",
+    description: "With over five decades of combined experience, we've successfully helped hundreds of clients secure their disability benefits.",
   },
   {
     icon: <Users className="h-10 w-10 text-accent" />,
@@ -70,7 +70,7 @@ const Features = () => {
             Why Choose George & George Disability Law?
           </h2>
           <p className="text-lg -foreground max-w-3xl mx-auto">
-            With over 50 years of combined experience, we've helped thousands of Tennessee and Kentucky residents secure their disability benefits.
+            With over 50 years of combined experience, we've helped hundreds of Tennessee and Kentucky residents secure their disability benefits.
           </p>
         </motion.div>
 

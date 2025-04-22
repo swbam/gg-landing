@@ -45,7 +45,7 @@ const About = () => {
                   <Check className="h-5 w-5 text-accent" />
                 </div>
                 <p className="ml-3 text-gray-700">
-                  <span className="font-semibold">Extensive experience</span> in Social Security Disability law, helping thousands of clients
+                  <span className="font-semibold">Extensive experience</span> in Social Security Disability law, helping hundreds of clients
                 </p>
               </div>
               <div className="flex items-start">

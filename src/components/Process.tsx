@@ -41,7 +41,7 @@ const Process = () => {
             How We Help You Win Your Case
           </h2>
           <p className="text-lg -foreground max-w-3xl mx-auto">
-            Our proven process has helped thousands of clients secure their disability benefits. Here's how we'll work together:
+            Our proven process has helped hundreds of clients secure their disability benefits. Here's how we'll work together:
           </p>
         </motion.div>
 
