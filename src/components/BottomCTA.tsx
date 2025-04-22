@@ -25,7 +25,7 @@ const BottomCTA = () => {
           alt="Nashville Skyline" 
           className="w-full h-full object-cover brightness-[0.3]"
         />
-        <div className="absolute inset-0 bg-primary/80 backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-primary/80 -[2px]"></div>
       </div>
 
       {/* Content */}

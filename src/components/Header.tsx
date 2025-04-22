@@ -45,12 +45,12 @@ const Header = ({
           alt="Nashville Skyline" 
           className="w-full h-full object-cover brightness-[0.6]"
         />
-        <div className="absolute inset-0 bg-primary/60 backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-primary/60 -[2px]"></div>
       </div>
 
       {/* Navbar */}
       <nav 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-[72px] sm:top-[40px] left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled ? 'bg-primary shadow-lg' : 'bg-transparent'
         }`}
       >
@@ -61,7 +61,7 @@ const Header = ({
 
           <a 
             href="tel:+16154511550" 
-            className="hidden md:flex items-center gap-2 font-medium text-white hover:text-accent transition-colors"
+            className="inline-flex items-center gap-2 bg-white text-gray-900 font-medium px-6 py-3 rounded-[1px] hover:bg-gray-100 transition-colors"
           >
             <Phone className="h-5 w-5" />
             <span>(615) 451-1550</span>
@@ -70,7 +70,7 @@ const Header = ({
       </nav>
 
       {/* Hero Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 sm:pt-32 pb-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-8rem)]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

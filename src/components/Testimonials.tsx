@@ -23,37 +23,37 @@ const Testimonials = () => {
         // which would then fetch reviews from Google's API
         const mockGoogleReviews: Review[] = [
           {
-            name: "Sarah Johnson",
+            name: "Sarah J.",
             rating: 5,
             text: "Chris George and his team were absolutely amazing! They helped me navigate through the complex disability process and won my case. I couldn't be more grateful for their expertise and dedication.",
             date: "2 weeks ago"
           },
           {
-            name: "Michael Thompson",
+            name: "Michael T.",
             rating: 5,
             text: "I was denied twice before coming to George & George. They took over my case and got me approved. Their knowledge of the system is incredible. Thank you!",
             date: "1 month ago"
           },
           {
-            name: "Patricia Davis",
+            name: "Patricia D.",
             rating: 5,
             text: "The best disability lawyers in Tennessee! They were always available to answer my questions and kept me informed throughout the entire process. Highly recommend!",
             date: "1 month ago"
           },
           {
-            name: "Robert Wilson",
+            name: "Robert W.",
             rating: 5,
             text: "Professional, knowledgeable, and caring. They truly understand the challenges we face and fight hard for their clients. So glad I chose them to represent me.",
             date: "2 months ago"
           },
           {
-            name: "Jennifer Martinez",
+            name: "Jennifer M.",
             rating: 5,
             text: "After being denied multiple times, George & George helped me win my case. Their experience and dedication made all the difference. Thank you for everything!",
             date: "2 months ago"
           },
           {
-            name: "David Anderson",
+            name: "David A.",
             rating: 5,
             text: "Outstanding service from start to finish. They explained everything clearly and fought hard for my rights. I'm now receiving the benefits I deserve.",
             date: "3 months ago"

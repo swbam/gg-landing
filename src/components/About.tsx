@@ -17,10 +17,10 @@ const About = () => {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <img
-              src={chrisHeadshot}
-              alt="Attorney Chris George"
-              className="w-full rounded-[1px] shadow-xl"
+            <img 
+              src={chrisHeadshot} 
+              alt="Attorney Chris George" 
+              className="w-full h-auto max-h-[360px] object-cover rounded-[1px] shadow-lg"
             />
           </motion.div>
 

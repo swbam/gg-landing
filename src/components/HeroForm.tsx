@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Loader2, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useGTMEvents } from '@/hooks/use-gtm-events';
+import { submitToGoogleSheet } from '@/lib/form-utils';
 
 interface HeroFormProps {
   location: 'hero' | 'bottom';
@@ -13,6 +14,7 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formStarted, setFormStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const gtm = useGTMEvents();
 
   const [formData, setFormData] = useState({
@@ -46,28 +48,26 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
     setStep(1);
     setFormStarted(false);
     setIsSuccess(false);
+    setError(null);
   };
 
   const handleInitialSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
     try {
       // Track step 1 completion
       gtm.trackFormStepComplete(location, 1, formData.benefitType);
       
-      // Save partial lead data first
-      await new Promise(resolve => setTimeout(resolve, 500));
-      console.log('Partial lead saved:', {
-        email: formData.email,
-        phone: formData.phone,
-        benefitType: formData.benefitType
-      });
+      // Save partial lead data
+      await submitToGoogleSheet(formData, true);
       
       // Move to next step
       setStep(2);
     } catch (error) {
       console.error('Error saving partial lead:', error);
+      setError('There was an error submitting your information. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -76,14 +76,14 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
   const handleFinalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
     try {
       // Track final form submission
       gtm.trackFormSubmit(location);
       
       // Submit complete form data
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Complete form submitted:', formData);
+      await submitToGoogleSheet(formData, false);
       
       setIsSuccess(true);
       
@@ -91,6 +91,7 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
       setTimeout(resetForm, 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
+      setError('There was an error submitting your form. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -99,7 +100,6 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     
-    // Track form start on first interaction
     if (!formStarted) {
       setFormStarted(true);
       gtm.trackFormStart(location);
@@ -113,44 +113,33 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
 
   if (isSuccess) {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full text-center py-8 px-4"
+        className="text-center py-8"
       >
-        <div className="mb-4 flex justify-center">
-          <CheckCircle2 className="h-16 w-16 text-green-500" />
-        </div>
-        <h3 className="text-2xl font-heading text-primary mb-2">
-          Thank You for Reaching Out!
-        </h3>
-        <p className="text-lg mb-6">
-          We'll contact you within 24 hours to discuss your case.
-        </p>
-        <motion.button
-          whileTap={{ scale: 0.98 }}
-          onClick={resetForm}
-          className="text-sm underline hover:text-primary"
-        >
-          Submit another inquiry
-        </motion.button>
+        <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
+        <h3 className="text-2xl font-bold mb-2">Thank You!</h3>
+        <p className="text-gray-600">We'll be in touch with you shortly.</p>
       </motion.div>
     );
   }
 
   return (
-    <div className="w-full">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-heading text-primary mb-2">
-          {location === 'hero' ? 'Get Your Free Case Review' : 'Start Your Free Consultation'}
-        </h2>
-        <p className="-foreground">
-          {step === 1 ? 'Quick 30-second evaluation to check your eligibility.' : 'Tell us more about your case.'}
-        </p>
-      </div>
-
+    <form onSubmit={step === 1 ? handleInitialSubmit : handleFinalSubmit} id={id}>
+      {error && (
+        <div className="bg-red-50 text-red-600 p-3 rounded-[1px] mb-4 text-sm">
+          {error}
+        </div>
+      )}
+      
       {step === 1 ? (
-        <form onSubmit={handleInitialSubmit} className="space-y-4" id={`${id}-step1`}>
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          className="space-y-4"
+        >
           <div>
             <input
               type="tel"
@@ -159,10 +148,7 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
               onChange={handleChange}
               placeholder="Phone Number*"
               required
-              pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
-              title="Please enter a valid 10-digit phone number"
-              className="w-full px-4 py-3 rounded-[1px] border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-base"
-              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-[1px] border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary"
             />
           </div>
 
@@ -174,8 +160,7 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
               onChange={handleChange}
               placeholder="Email Address*"
               required
-              className="w-full px-4 py-3 rounded-[1px] border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-base"
-              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-[1px] border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary"
             />
           </div>
 
@@ -185,37 +170,38 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
               value={formData.benefitType}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-[1px] border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-base bg-white"
-              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-[1px] border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary"
             >
               <option value="">Select Benefit Type*</option>
               <option value="SSDI">Social Security Disability (SSDI)</option>
               <option value="SSI">Supplemental Security Income (SSI)</option>
-              <option value="UNSURE">Not Sure/Need Help Deciding</option>
+              <option value="Both">Both SSDI & SSI</option>
+              <option value="Unknown">I'm Not Sure</option>
             </select>
           </div>
 
-          <motion.button
+          <button
             type="submit"
-            whileTap={{ scale: 0.98 }}
             disabled={isLoading}
-            className="w-full bg-accent text-primary font-medium px-6 py-3 rounded-[1px] hover:bg-accent/90 transition-colors flex items-center justify-center gap-2 text-base"
+            className="w-full bg-accent text-primary font-medium px-6 py-3 rounded-[1px] hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
           >
             {isLoading ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                Checking Eligibility...
-              </>
+              <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
               <>
                 Continue
-                <ArrowRight className="h-5 w-5" />
+                <ArrowRight className="w-5 h-5" />
               </>
             )}
-          </motion.button>
-        </form>
+          </button>
+        </motion.div>
       ) : (
-        <form onSubmit={handleFinalSubmit} className="space-y-4" id={`${id}-step2`}>
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          className="space-y-4"
+        >
           <div>
             <input
               type="text"
@@ -224,8 +210,7 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
               onChange={handleChange}
               placeholder="Full Name*"
               required
-              className="w-full px-4 py-3 rounded-[1px] border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-base"
-              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-[1px] border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary"
             />
           </div>
 
@@ -234,36 +219,26 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              placeholder="Brief description of your case*"
-              required
+              placeholder="Tell us briefly about your case..."
               rows={4}
-              className="w-full px-4 py-3 rounded-[1px] border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-base resize-none"
-              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-[1px] border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary resize-none"
             />
           </div>
 
-          <motion.button
+          <button
             type="submit"
-            whileTap={{ scale: 0.98 }}
             disabled={isLoading}
-            className="w-full bg-accent text-primary font-medium px-6 py-3 rounded-[1px] hover:bg-accent/90 transition-colors flex items-center justify-center gap-2 text-base"
+            className="w-full bg-accent text-primary font-medium px-6 py-3 rounded-[1px] hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
           >
             {isLoading ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                Sending...
-              </>
+              <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              'Get Free Consultation'
+              'Submit'
             )}
-          </motion.button>
-        </form>
+          </button>
+        </motion.div>
       )}
-
-      <p className="text-xs -foreground text-center mt-4">
-        By submitting this form, you agree to be contacted about your case.
-      </p>
-    </div>
+    </form>
   );
 };
 
