@@ -107,12 +107,6 @@ const Header = ({
               >
                 {cta}
               </a>
-              <a 
-                href="#contact-form"
-                className="inline-flex items-center justify-center bg-white text-primary font-medium px-6 py-3 rounded-[1px] hover:bg-white/90 transition-colors text-center"
-              >
-                Free Case Review
-              </a>
             </div>
           </motion.div>
 
