@@ -3,11 +3,27 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Bw Beto DEMO';
-  src: url('/BwBetoGrandeDEMO-Medium') format('woff2');
+  font-family: 'Bw Beto';
+  src: url('./assets/BwBetoGrandeDEMO-Medium.woff2') format('woff2'),
+       url('./assets/BwBetoGrande-Medium.woff2') format('woff2'),
+       url('./assets/BwBetoGrandeDEMO-Medium.woff') format('woff'),
+       url('./assets/BwBetoGrande-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bw Beto';
+  src: url('./assets/BwBetoDEMO-Regular.woff2') format('woff2'),
+       url('./assets/BwBetoDEMO-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-heading {
+  font-family: 'Bw Beto', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 /* Mobile form optimizations */
@@ -111,7 +127,7 @@ body {
     @apply bg-background text-foreground;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Bw Beto DEMO';
+    font-family: 'Bw Beto', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
     font-weight: 500;
   }
 }

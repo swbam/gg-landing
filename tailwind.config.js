@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        bwbeto: ['BwBetoGrande', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
+        heading: ['Bw Beto', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',
