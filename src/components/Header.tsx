@@ -56,7 +56,7 @@ const Header = ({
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center">
-            <img src={logoWhite} alt="George & George Disability Law" className="h-10 md:h-16" />
+            <img src={logoWhite} alt="George & George Disability Law" className="h-10 md:h-12" />
           </div>
 
           <a 
@@ -121,7 +121,8 @@ const Header = ({
                 <img src={headshot} alt="Chris George" className="w-20 h-20 rounded-full object-cover" />
                 <div>
                   <h3 className="text-lg ">Chris George</h3>
-                  <p className="text-gray-600">Disability Attorney</p>
+                  <p className="text-gray-600">Serving Middle Tennessee and Southern Kentucky for Over 50 Years
+                  </p>
                 </div>
               </div>
               <HeroForm id="hero-contact-form" location="hero" />
