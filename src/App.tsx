@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Features from './components/Features';
 import Process from './components/Process';
@@ -10,6 +11,13 @@ import Footer from './components/Footer';
 import { Toaster } from './components/ui/toaster';
 import { useToast } from './hooks/use-toast';
 import { checkFormStatus } from './lib/form-utils';
+import VariantNav from './components/VariantNav';
+
+// Variants
+import Variant1 from './variants/Variant1';
+import Variant2 from './variants/Variant2';
+import Variant3 from './variants/Variant3';
+import Variant4 from './variants/Variant4';
 
 function App() {
   const { toast } = useToast();
@@ -34,19 +42,29 @@ function App() {
   }, [toast]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
-      <Header />
-      <main>
-        <Features />
-        <About />
-        <Process />
-        <Testimonials />
-        <BottomCTA />
-      </main>
-      <FloatingCTA />
-      <Footer />
-      <Toaster />
-    </div>
+    <Router>
+      <div className="flex flex-col min-h-screen bg-white">
+        <Header />
+        <VariantNav />
+        <main>
+          <Routes>
+            <Route path="/" element={<Navigate to="/variant/1" replace />} />
+            <Route path="/variant/1" element={<Variant1 />} />
+            <Route path="/variant/2" element={<Variant2 />} />
+            <Route path="/variant/3" element={<Variant3 />} />
+            <Route path="/variant/4" element={<Variant4 />} />
+          </Routes>
+          <Features />
+          <About />
+          <Process />
+          <Testimonials />
+          <BottomCTA />
+        </main>
+        <FloatingCTA />
+        <Footer />
+        <Toaster />
+      </div>
+    </Router>
   );
 }
 

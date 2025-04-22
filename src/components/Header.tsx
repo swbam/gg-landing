@@ -6,7 +6,17 @@ import logoWhite from '@/assets/logo.webp';
 import skylineBg from '@/assets/george-and-george-nashville-skyline-jpg.webp';
 import headshot from '@/assets/chris-about-headshot.png';
 
-const Header = () => {
+interface HeaderProps {
+  headline?: string;
+  subheadline?: string;
+  cta?: string;
+}
+
+const Header = ({
+  headline = "Get the Disability Benefits You Deserve",
+  subheadline = "Our experienced attorneys will fight for your rights and help you navigate the complex disability system. Let us handle your case while you focus on your health.",
+  cta = "Call Now: (615) 451-1550"
+}: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -68,11 +78,11 @@ const Header = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl text-white  mb-6 leading-tight">
-              Get the Disability Benefits You Deserve
+              {headline}
             </h1>
             
             <p className="text-xl text-white/90 mb-8">
-              Our experienced attorneys will fight for your rights and help you navigate the complex disability system. Let us handle your case while you focus on your health.
+              {subheadline}
             </p>
 
             <div className="grid gap-4 mb-8">
@@ -95,7 +105,7 @@ const Header = () => {
                 href="tel:+16154511550"
                 className="inline-flex items-center justify-center gap-2 bg-accent text-primary font-medium px-6 py-3 rounded-[1px] hover:bg-accent/90 transition-colors text-center"
               >
-                Call Now: (615) 451-1550
+                {cta}
               </a>
               <a 
                 href="#contact-form"

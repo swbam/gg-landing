@@ -27,13 +27,13 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (formStarted && !isLoading && !isSuccess) {
-        gtm.trackFormAbandonment(location, step, formData.benefitType);
+        gtm.trackFormAbandonment(location, step);
       }
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [formStarted, isLoading, step, location, formData.benefitType, gtm, isSuccess]);
+  }, [formStarted, isLoading, step, location, gtm, isSuccess]);
 
   const resetForm = () => {
     setFormData({
@@ -79,7 +79,7 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
 
     try {
       // Track final form submission
-      gtm.trackFormSubmit(location, formData.benefitType);
+      gtm.trackFormSubmit(location);
       
       // Submit complete form data
       await new Promise(resolve => setTimeout(resolve, 1000));

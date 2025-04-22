@@ -1,4 +1,4 @@
-interface GTMEvent {
+interface GTMEvent extends Record<string, unknown> {
   event: string;
   formLocation?: string;
   formStep?: number;
@@ -32,21 +32,19 @@ export const useGTMEvents = () => {
     });
   };
 
-  const trackFormSubmit = (location: string, benefitType: string) => {
+  const trackFormSubmit = (location: string) => {
     pushEvent({
       event: 'form_submit',
       formLocation: location,
-      benefitType,
-      conversionValue: 30
+      conversionValue: 50
     });
   };
 
-  const trackFormAbandonment = (location: string, step: number, benefitType?: string) => {
+  const trackFormAbandonment = (location: string, step: number) => {
     pushEvent({
       event: 'form_abandonment',
       formLocation: location,
-      formStep: step,
-      benefitType
+      formStep: step
     });
   };
 
