@@ -50,27 +50,27 @@ const Header = ({
 
       {/* Navbar */}
       <nav 
-        className={`fixed top-[72px] sm:top-[40px] left-0 right-0 z-40 transition-all duration-300 ${
+        className={`fixed top-[88px] sm:top-[40px] left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled ? 'bg-primary shadow-lg' : 'bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center">
-            <img src={logoWhite} alt="George & George Disability Law" className="h-12 md:h-16" />
+            <img src={logoWhite} alt="George & George Disability Law" className="h-10 md:h-16" />
           </div>
 
           <a 
             href="tel:+16154511550" 
-            className="inline-flex items-center gap-2 bg-white text-gray-900 font-medium px-6 py-3 rounded-[1px] hover:bg-gray-100 transition-colors"
+            className="inline-flex items-center gap-2 bg-white text-gray-900 font-medium px-4 sm:px-6 py-2 sm:py-3 rounded-[1px] hover:bg-gray-100 transition-colors text-sm sm:text-base"
           >
-            <Phone className="h-5 w-5" />
+            <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
             <span>(615) 451-1550</span>
           </a>
         </div>
       </nav>
 
       {/* Hero Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 sm:pt-32 pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-48 sm:pt-32 pb-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-8rem)]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
