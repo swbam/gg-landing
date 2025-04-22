@@ -154,17 +154,7 @@ const Testimonials = () => {
               </button>
             </div>
 
-            <div className="mt-8 text-center">
-              <a
-                href="https://www.google.com/maps/place/George+%26+George+Disability+Law/@36.3885064,-86.4501377,17z/data=!3m1!4b1!4m6!3m5!1s0x8864714e3ab7f631:0x42e89d8e0a5e0776!8m2!3d36.3885064!4d-86.4501377!16s%2Fg%2F11h_yl_43t?entry=ttu"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline inline-flex items-center gap-2"
-              >
-                View All Google Reviews
-                <ChevronRight className="h-4 w-4" />
-              </a>
-            </div>
+         
           </div>
         )}
       </div>

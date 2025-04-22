@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone } from 'lucide-react';
+import { Phone, MessageSquare } from 'lucide-react';
+import MobileForm from './MobileForm';
 
 const FloatingCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -57,15 +59,17 @@ const FloatingCTA = () => {
               <Phone className="h-5 w-5" />
               <span>Call Now</span>
             </a>
-            <a 
-              href="#contact-form"
-              className="flex-1 flex items-center justify-center bg-primary text-white font-medium px-4 py-3 rounded-lg hover:bg-primary/90 transition-colors"
+            <button
+              onClick={() => setIsFormOpen(true)}
+              className="flex-1 flex items-center justify-center gap-2 bg-primary text-white font-medium px-4 py-3 rounded-lg hover:bg-primary/90 transition-colors"
             >
-              Free Consultation
-            </a>
+              <MessageSquare className="h-5 w-5" />
+              <span>Free Consultation</span>
+            </button>
           </div>
         </motion.div>
       )}
+      <MobileForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
     </AnimatePresence>
   );
 };
