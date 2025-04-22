@@ -89,7 +89,7 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
       
       // Reset form after 5 seconds
       setTimeout(resetForm, 5000);
-    } catch (error) {
+    } catch (error) { 
       console.error('Error submitting form:', error);
       setError('There was an error submitting your form. Please try again.');
     } finally {
