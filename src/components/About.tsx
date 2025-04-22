@@ -15,13 +15,15 @@ const About = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.6 }}
-            className="relative"
+            className="relative flex justify-center"
           >
-            <img 
-              src={chrisHeadshot} 
-              alt="Attorney Chris George" 
-              className="w-full h-auto max-h-[360px] object-cover rounded-[1px] shadow-lg"
-            />
+            <div className="w-[400px] h-[400px] rounded-full overflow-hidden">
+              <img 
+                src={chrisHeadshot} 
+                alt="Attorney Chris George" 
+                className="w-full h-full object-cover"
+              />
+            </div>
           </motion.div>
 
           {/* Content */}
