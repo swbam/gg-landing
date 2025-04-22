@@ -30,18 +30,8 @@ interface FormData {
   timestamp: string;
 }
 
-interface SubmitFormData {
-  phone: string;
-  email: string;
-  benefitType: string;
-  location: string;
-  timestamp: string;
-}
-
 // The Apps Script Web App URL that handles form submissions
 const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx_lPkD90PE-dA014f-IQUnJw8qIxQF0H7ZfblBHsym-nYHKndAycyqr8kld2jJWyehYA/exec';
-
-const SUBMIT_FORM_URL = 'https://script.google.com/macros/s/AKfycbxDEPwY4sFMGZHUvnF7cR1dNqRxlPXJ3GQOHNXXNQtZEYzY8pJ3UNzxlHWd_YHpwDHR/exec';
 
 export async function submitToGoogleSheet(formData: Omit<FormData, 'formType'>, location: 'hero' | 'bottom' | 'mobile-fullscreen', isPartialSubmission: boolean = false) {
   try {
@@ -75,25 +65,3 @@ export async function submitToGoogleSheet(formData: Omit<FormData, 'formType'>, 
     throw error;
   }
 }
-
-export const submitForm = async (data: SubmitFormData) => {
-  try {
-    const response = await fetch(SUBMIT_FORM_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok && response.type !== 'opaque') {
-      throw new Error('Network response was not ok');
-    }
-
-    return true;
-  } catch (error) {
-    console.error('Error submitting form:', error);
-    throw error;
-  }
-};

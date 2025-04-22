@@ -61,7 +61,11 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
       gtm.trackFormStepComplete(location, 1, formData.benefitType);
       
       // Save partial lead data
-      await submitToGoogleSheet(formData, true);
+      await submitToGoogleSheet({
+        ...formData,
+        location,
+        timestamp: new Date().toISOString()
+      }, location, true);
       
       // Move to next step
       setStep(2);
@@ -83,7 +87,11 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
       gtm.trackFormSubmit(location);
       
       // Submit complete form data
-      await submitToGoogleSheet(formData, false);
+      await submitToGoogleSheet({
+        ...formData,
+        location,
+        timestamp: new Date().toISOString()
+      }, location, false);
       
       setIsSuccess(true);
       

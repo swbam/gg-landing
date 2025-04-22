@@ -1,54 +1,41 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Loader2, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { X, ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
+import { submitToGoogleSheet } from '../lib/form-utils';
 import { useGTMEvents } from '@/hooks/use-gtm-events';
-import { submitToGoogleSheet } from '@/lib/form-utils';
 
 interface MobileFormProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const MobileForm = ({ isOpen, onClose }: MobileFormProps) => {
+interface FormData {
+  phone: string;
+  email: string;
+  benefitType: string;
+  name: string;
+  message: string;
+}
+
+export default function MobileForm({ isOpen, onClose }: MobileFormProps) {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [formStarted, setFormStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const gtm = useGTMEvents();
-
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     phone: '',
     email: '',
     benefitType: '',
     name: '',
-    message: ''
+    message: '',
   });
 
-  // Track form abandonment
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (formStarted && !isLoading && !isSuccess) {
-        gtm.trackFormAbandonment('mobile', step);
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [formStarted, isLoading, step, gtm, isSuccess]);
-
-  const resetForm = () => {
-    setFormData({
-      phone: '',
-      email: '',
-      benefitType: '',
-      name: '',
-      message: ''
-    });
-    setStep(1);
-    setFormStarted(false);
-    setIsSuccess(false);
-    setError(null);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
   const handleInitialSubmit = async (e: React.FormEvent) => {
@@ -108,19 +95,27 @@ const MobileForm = ({ isOpen, onClose }: MobileFormProps) => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    if (!formStarted) setFormStarted(true);
-    setFormData(prev => ({ ...prev, [name]: value }));
+  const resetForm = () => {
+    setStep(1);
+    setIsLoading(false);
+    setIsSuccess(false);
+    setError(null);
+    setFormData({
+      phone: '',
+      email: '',
+      benefitType: '',
+      name: '',
+      message: '',
+    });
   };
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: '100%' }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: '100%' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ type: 'spring', damping: 25 }}
           className="fixed inset-0 z-50 bg-white"
         >
@@ -149,15 +144,20 @@ const MobileForm = ({ isOpen, onClose }: MobileFormProps) => {
                     <div className="text-red-500 text-sm">{error}</div>
                   )}
 
-                  {step === 1 && (
+                  {step === 1 ? (
                     <motion.div
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       className="space-y-5"
                     >
+                      <div>
+                        <h3 className="text-2xl font-heading mb-2">Take the first step toward securing your benefits.</h3>
+                        <p className="text-gray-600 mb-6">Share your contact info, and we'll reach out to help.</p>
+                      </div>
+
                       <div className="space-y-5">
                         <label className="block">
-                          <span className="text-base mb-1.5 block text-gray-700">Phone Number</span>
+                          <span className="text-base mb-1.5 block text-gray-700">Phone Number*</span>
                           <input
                             type="tel"
                             name="phone"
@@ -170,7 +170,20 @@ const MobileForm = ({ isOpen, onClose }: MobileFormProps) => {
                         </label>
 
                         <label className="block">
-                          <span className="text-base mb-1.5 block text-gray-700">Benefit Type</span>
+                          <span className="text-base mb-1.5 block text-gray-700">Email Address*</span>
+                          <input
+                            type="email"
+                            name="email"
+                            required
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="w-full p-3.5 border border-gray-300 rounded-[1px] text-base"
+                            placeholder="your@email.com"
+                          />
+                        </label>
+
+                        <label className="block">
+                          <span className="text-base mb-1.5 block text-gray-700">Benefit Type*</span>
                           <select
                             name="benefitType"
                             required
@@ -187,17 +200,20 @@ const MobileForm = ({ isOpen, onClose }: MobileFormProps) => {
                         </label>
                       </div>
                     </motion.div>
-                  )}
-
-                  {step === 2 && (
+                  ) : (
                     <motion.div
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       className="space-y-5"
                     >
+                      <div>
+                        <h3 className="text-2xl font-heading mb-2">Tell us about yourself</h3>
+                        <p className="text-gray-600 mb-6">Help us understand your situation better.</p>
+                      </div>
+
                       <div className="space-y-5">
                         <label className="block">
-                          <span className="text-base mb-1.5 block text-gray-700">Full Name</span>
+                          <span className="text-base mb-1.5 block text-gray-700">Full Name*</span>
                           <input
                             type="text"
                             name="name"
@@ -206,19 +222,6 @@ const MobileForm = ({ isOpen, onClose }: MobileFormProps) => {
                             onChange={handleChange}
                             className="w-full p-3.5 border border-gray-300 rounded-[1px] text-base"
                             placeholder="Your Name"
-                          />
-                        </label>
-
-                        <label className="block">
-                          <span className="text-base mb-1.5 block text-gray-700">Email Address</span>
-                          <input
-                            type="email"
-                            name="email"
-                            required
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="w-full p-3.5 border border-gray-300 rounded-[1px] text-base"
-                            placeholder="your@email.com"
                           />
                         </label>
 
@@ -281,5 +284,3 @@ const MobileForm = ({ isOpen, onClose }: MobileFormProps) => {
     </AnimatePresence>
   );
 };
-
-export default MobileForm;
