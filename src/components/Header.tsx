@@ -39,7 +39,7 @@ const Header = ({ headline, subheadline, cta }: { headline: string; subheadline:
 
       {/* Navbar */}
       <nav 
-        className={`fixed top-[88px] sm:top-[px] left-0 right-0 z-40 transition-all duration-300 ${
+        className={`fixed top-[80px] sm:top-[35px] left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled ? 'bg-primary shadow-lg' : 'bg-transparent'
         }`}
       >

@@ -45,25 +45,25 @@ const FloatingCTA = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-gradient-to-t from-black/20 to-transparent -sm"
+          initial={{ y: '100%' }}
+          animate={{ y: 0 }}
+          exit={{ y: '100%' }}
+          transition={{ type: 'spring', damping: 20 }}
+          className="fixed bottom-0 left-0 right-0 z-40 md:hidden"
         >
-          <div className="flex gap-3 max-w-lg mx-auto">
-            <a 
+          <div className="flex gap-2 p-3 bg-white border-t border-gray-200">
+            <a
               href="tel:6154511550"
-              className="flex-1 flex items-center justify-center gap-2 bg-accent text-primary font-medium px-4 py-3 rounded-lg hover:bg-accent/90 transition-colors"
+              className="flex-1 inline-flex items-center justify-center gap-2 bg-accent text-primary font-medium px-3 py-3 rounded-[1px] hover:bg-accent/90 transition-colors text-center whitespace-nowrap text-sm"
             >
-              <Phone className="h-5 w-5" />
+              <Phone className="h-4 w-4" />
               <span>Call Now</span>
             </a>
             <button
               onClick={() => setIsFormOpen(true)}
-              className="flex-1 flex items-center justify-center gap-2 bg-primary text-white font-medium px-4 py-3 rounded-lg hover:bg-primary/90 transition-colors"
+              className="flex-1 inline-flex items-center justify-center gap-2 bg-primary text-white font-medium px-3 py-3 rounded-[1px] hover:bg-primary/90 transition-colors whitespace-nowrap text-sm"
             >
-              <MessageSquare className="h-5 w-5" />
+              <MessageSquare className="h-4 w-4" />
               <span>Free Consultation</span>
             </button>
           </div>

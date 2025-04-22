@@ -24,6 +24,10 @@ interface FormData {
   benefitType: string;
   name: string;
   message: string;
+  formType: 'hero' | 'bottom' | 'mobile-fullscreen';
+  location: string;
+  isPartialSubmission?: boolean;
+  timestamp: string;
 }
 
 interface SubmitFormData {
@@ -39,23 +43,31 @@ const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx_lPkD90PE-dA
 
 const SUBMIT_FORM_URL = 'https://script.google.com/macros/s/AKfycbxDEPwY4sFMGZHUvnF7cR1dNqRxlPXJ3GQOHNXXNQtZEYzY8pJ3UNzxlHWd_YHpwDHR/exec';
 
-export async function submitToGoogleSheet(formData: FormData, isPartialSubmission: boolean = false) {
+export async function submitToGoogleSheet(formData: Omit<FormData, 'formType'>, location: 'hero' | 'bottom' | 'mobile-fullscreen', isPartialSubmission: boolean = false) {
   try {
     const formDataToSend = new FormData();
-    Object.entries({
-      ...formData,
-      submissionType: isPartialSubmission ? 'partial' : 'complete',
-      timestamp: new Date().toISOString(),
-      source: window.location.pathname
-    }).forEach(([key, value]) => {
-      formDataToSend.append(key, value);
+    const timestamp = new Date().toISOString();
+
+    // Add all form fields
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataToSend.append(key, String(value));
     });
 
-    await fetch(GOOGLE_SHEET_URL, {
+    // Add metadata
+    formDataToSend.append('formType', location);
+    formDataToSend.append('location', location);
+    formDataToSend.append('isPartialSubmission', isPartialSubmission ? 'true' : 'false');
+    formDataToSend.append('timestamp', timestamp);
+
+    const response = await fetch(GOOGLE_SHEET_URL, {
       method: 'POST',
       mode: 'no-cors',
       body: formDataToSend
     });
+
+    if (!response.ok && response.type !== 'opaque') {
+      throw new Error('Network response was not ok');
+    }
 
     return true;
   } catch (error) {
