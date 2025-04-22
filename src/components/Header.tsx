@@ -104,7 +104,7 @@ const Header = ({ headline, subheadline, cta }: { headline: string; subheadline:
               >
                 <img src={headshot} alt="Chris George" className="w-20 h-20 rounded-full object-cover" />
                 <div>
-                  <h3 className="text-lg">Chris George</h3>
+                  <h3 className="text-2xl font-medium mb-1">Chris George</h3>
                   <p className="text-gray-600">Dedicated Disability Attorney for Middle Tennessee & Southern Kentucky</p>
                 </div>
               </motion.div>
