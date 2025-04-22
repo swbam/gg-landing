@@ -60,10 +60,10 @@ const BottomCTA = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <a 
-                href="tel:6156517422"
+                href="tel:6154511550"
                 className="inline-flex items-center justify-center gap-2 bg-accent text-primary font-medium px-6 py-3 rounded-[1px] hover:bg-accent/90 transition-colors text-center"
               >
-                Call Now: (615) 651-7422
+                Call Now: (615) 451-1550
               </a>
             </div>
           </motion.div>

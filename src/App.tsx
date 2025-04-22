@@ -18,22 +18,22 @@ const variants = {
   '/variant/1': {
     headline: "Facing the System Alone? Not Anymore.",
     subheadline: "Spare yourself confusion and frustration. Our team guides you every step of the way.",
-    cta: "Call (615) 651-7422"
+    cta: "Call (615) 451-1550"
   },
   '/variant/2': {
     headline: "Your Disability Claim Approved",
     subheadline: "Or You Pay Nothing. Start with a Free Consultation Today.",
-    cta: "Call (615) 651-7422"
+    cta: "Call (615) 451-1550"
   },
   '/variant/3': {
     headline: "Disability Benefits Shouldn't Be a Battle",
     subheadline: "We Change That. Let Our Experience Guide Your Success.",
-    cta: "Call (615) 651-7422"
+    cta: "Call (615) 451-1550"
   },
   '/variant/4': {
     headline: "Can't Work Due to Disability?",
     subheadline: "Get Your Free Case Review Now. We'll Fight for Your Benefits.",
-    cta: "Call (615) 651-7422"
+    cta: "Call (615) 451-1550"
   }
 };
 

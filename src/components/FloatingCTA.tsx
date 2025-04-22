@@ -51,7 +51,7 @@ const FloatingCTA = () => {
         >
           <div className="flex gap-3 max-w-lg mx-auto">
             <a 
-              href="tel:6156517422"
+              href="tel:6154511550"
               className="flex-1 flex items-center justify-center gap-2 bg-accent text-primary font-medium px-4 py-3 rounded-lg hover:bg-accent/90 transition-colors"
             >
               <Phone className="h-5 w-5" />
