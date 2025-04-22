@@ -120,9 +120,8 @@ const Header = ({
               <div className="flex items-center gap-4 mb-6">
                 <img src={headshot} alt="Chris George" className="w-20 h-20 rounded-full object-cover" />
                 <div>
-                  <h3 className="text-lg ">Chris George</h3>
-                  <p className="text-gray-600">Serving Middle Tennessee and Southern Kentucky for Over 50 Years
-                  </p>
+                  <h3 className="text-lg">Chris George</h3>
+                  <p className="text-gray-600">The Go-to Lawyer for Disability Cases in Middle Tennessee & Southern Kentucky</p>
                 </div>
               </div>
               <HeroForm id="hero-contact-form" location="hero" />

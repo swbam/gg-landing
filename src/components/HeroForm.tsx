@@ -139,7 +139,7 @@ const HeroForm = ({ location, id = 'contact-form' }: HeroFormProps) => {
         </div>
       ) : (
         <>
-          <p className="text-gray-600 text-sm mb-6">
+          <p className="text-gray-600 text-2xl font-BwBeto mb-6">
             Take the first step toward securing your benefits. Share your contact info, and we'll reach out to help.
           </p>
           

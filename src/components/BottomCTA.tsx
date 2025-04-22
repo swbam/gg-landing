@@ -38,10 +38,10 @@ const BottomCTA = () => {
           >
             <div className="flex flex-col gap-6">
               <div>
-                <h2 className="text-3xl md:text-4xl font-heading mb-4">
+                <h2 className="text-3xl md:text-4xl font-heading text-white mb-4">
                   Get Help With Your Disability Case Today
                 </h2>
-                <p className="text-lg text-gray-600 mb-2">
+                <p className="text-lg text-white/90 mb-2">
                   Take the first step toward securing your benefits. Share your contact info below, and we'll reach out to discuss your case.
                 </p>
               </div>
